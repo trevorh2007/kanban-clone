@@ -4,11 +4,11 @@ import { v4 as uuid } from 'uuid';
 import "./dragColumn.scss"
 
 const backendItemsData = [
-    {id: uuid(), content: 'First task'},
-    {id: uuid(), content: 'Second task'},
-    {id: uuid(), content: 'Third task'},
-    {id: uuid(), content: 'Fourth task'},
-    {id: uuid(), content: 'Fifth task'}
+    { id: uuid(), title: 'First task', description: 'Task 1 description', priority: 'high' },
+    { id: uuid(), title: 'Second task', description: 'Task 2 description', priority: 'high' },
+    { id: uuid(), title: 'Third task', description: 'Task 3 description', priority: 'low' },
+    { id: uuid(), title: 'Fourth task', description: 'Task 4 description', priority: 'medium' },
+    { id: uuid(), title: 'Fifth task', description: 'Task 5 description', priority: 'medium' }
 ]
 const backendColumnData = {
     [uuid()]: {
@@ -31,7 +31,7 @@ const backendColumnData = {
 
 const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return
-    const {source, destination} = result
+    const { source, destination } = result
     if (source.droppableId !== destination.droppableId) {
         const sourceColumn = columns[source.droppableId]
         const destColumn = columns[destination.droppableId]
@@ -66,16 +66,32 @@ const onDragEnd = (result, columns, setColumns) => {
     }
 }
 
+const prioritySwitch = priority => {
+    switch (priority) {
+        case 'high':
+            return 'draggable priority-high';
+            break;
+        case 'medium':
+            return 'draggable priority-medium';
+            break;
+        case 'low':
+            return 'draggable priority-low';
+            break;
+        default:
+            return 'draggable'
+    }
+}
+
 const DragColumn = () => {
     const [columns, setColumns] = useState(backendColumnData);
 
-    return(
+    return (
         <div className="drag-column">
             <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
                 {Object.entries(columns).map(([id, column]) => {
                     return (
                         <div className="droppable-column">
-                            <h2>{column.name}</h2>
+                            <h2>{column.name} {column.items.length > 0 ? column.items.length : ''}</h2>
                             <Droppable droppableId={id} key={id}>
                                 {(provided, snapshot) => {
                                     return (
@@ -91,7 +107,7 @@ const DragColumn = () => {
                                                         {(provided, snapshot) => {
                                                             return (
                                                                 <div
-                                                                    className="draggable"
+                                                                    className={prioritySwitch(item.priority)}
                                                                     ref={provided.innerRef}
                                                                     {...provided.draggableProps}
                                                                     {...provided.dragHandleProps}
@@ -100,7 +116,12 @@ const DragColumn = () => {
                                                                         ...provided.draggableProps.style
                                                                     }}
                                                                 >
-                                                                    {item.content}
+                                                                    <div className="draggable-header">
+                                                                        {item.title}
+                                                                    </div>
+                                                                    <div className="draggable-desc">
+                                                                        {item.description}
+                                                                    </div>
                                                                 </div>
                                                             )
                                                         }}
