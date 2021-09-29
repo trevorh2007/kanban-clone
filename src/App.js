@@ -1,10 +1,10 @@
 import "./App.scss"
+import DragColumn from "./components/DragColumn/dragColumn"
 
 function App() {
   return (
     <div className="App">
-      <h1>Kanban Clone</h1>
-      <p>Testing some stuff</p>
+      <DragColumn />
     </div>
   );
 }
