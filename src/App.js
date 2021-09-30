@@ -1,10 +1,10 @@
 import "./App.scss"
-import DragColumn from "./components/DragColumn/dragColumn"
+import DragColumns from "./components/DragColumns/dragColumns"
 
 function App() {
   return (
     <div className="App">
-      <DragColumn />
+      <DragColumns />
     </div>
   );
 }
