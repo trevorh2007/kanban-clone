@@ -28,7 +28,7 @@ const ReadTaskModal = ({ isShowing, hide, data }) => {
                                     type="button"
                                     className="modal-close-button"
                                     data-dismiss="modal"
-                                    onClick={hide}
+                                    onClick={() => { hide(); setDeleteClicked(false); }}
                                 >
                                     <span>&times;</span>
                                 </button>
