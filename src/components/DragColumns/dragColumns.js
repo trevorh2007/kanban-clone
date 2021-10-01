@@ -43,6 +43,7 @@ const onDragEnd = (result, columns, setColumns) => {
 
 const DragColumns = () => {
     const [columns, setColumns] = useState({});
+    const [serverErrorMessage, setServerErrorMessage] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,20 +53,46 @@ const DragColumns = () => {
                 setColumns(backendColumnData)
             } catch (err) {
                 console.log(err)
+                setServerErrorMessage('Error getting data from back end (SERVER ERROR)')
+                setColumns({
+                    "1": {
+                        "name": "TO DO",
+                        "tasks": []
+                    },
+                    "2": {
+                        "name": "IN PROGRESS",
+                        "tasks": []
+                    },
+                    "3": {
+                        "name": "IN REVIEW",
+                        "tasks": []
+                    },
+                    "4": {
+                        "name": "COMPLETED",
+                        "tasks": []
+                    }
+                })
             }
         }
         fetchData()
     }, [])
 
     return (
-        <div className="drag-column">
-            <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
-                {Object.entries(columns).map(([id, column]) => {
-                    return (
-                        <DroppableContent id={id} column={column} key={id} />
-                    )
-                })}
-            </DragDropContext>
+        <div className="dnd-overlay">
+            {serverErrorMessage && (
+                <div className="server-error-text">
+                    {serverErrorMessage}
+                </div>
+            )}
+            <div className="error-and-content">
+                <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
+                    {Object.entries(columns).map(([id, column]) => {
+                        return (
+                            <DroppableContent id={id} column={column} key={id} />
+                        )
+                    })}
+                </DragDropContext>
+            </div>
         </div>
     )
 }

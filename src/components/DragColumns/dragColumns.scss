@@ -1,5 +1,15 @@
-.drag-column {
+.dnd-overlay {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     height: 100%;
+    .server-error-text {
+        background: red;
+        color: white;
+        padding: 10px 30px;
+        margin-top: 15px;
+    }
+    .error-and-content {
+        display: flex;
+    }
 }
