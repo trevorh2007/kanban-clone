@@ -5,7 +5,10 @@
     .droppable {
         padding: 4px;
         width: 250px;
-        min-height: 500px;
+        height: 500px;
         margin: 8px;
+        overflow-y: auto;
+        scrollbar-color: grey white;
+        scrollbar-width: thin;
     }
 }
