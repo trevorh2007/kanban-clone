@@ -44,11 +44,44 @@
           }
       }
       .modal-data {
-          padding: 2rem 0.5rem;
+        padding: 1rem 0.5rem;
+        .modal-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 2rem;
+        }
         div {
             padding: 5px 0;
             span {
                 font-weight: 700;
+            }
+        }
+        .new-task-data {
+            display: grid;
+            grid-template-columns: 33% 67%;
+            padding-bottom: 15px;
+            div, input, textarea {
+                margin-bottom: 15px;
+            }
+            select {
+                height: 25px;
+                background: #fff;
+                border: 1px solid #000;
+                box-shadow: none;
+                option {
+                    background: #fff;
+                }
+            }
+        }
+        .create-btn-modal {
+            width: fit-content;
+            background: #0000ff;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 0 0 0 auto;
+            border-radius: 5px;
+            &:hover {
+                cursor: pointer;
             }
         }
       }
