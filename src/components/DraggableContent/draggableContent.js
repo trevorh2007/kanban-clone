@@ -37,7 +37,7 @@ const DraggableContent = (props) => {
                             {props.task.title}
                         </div>
                         <div className="draggable-desc">
-                            {props.task.description}
+                            {props.task.description.substring(0, 70) + '...'}
                         </div>
                     </div>
                 )

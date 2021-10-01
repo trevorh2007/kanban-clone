@@ -5,27 +5,32 @@ import DroppableContent from "../DroppableContent/droppableContent";
 import axios from 'axios';
 import CreateTask from "../Tasks/CreateTask/createTask"
 
-const onDragEnd = (result, columns, setColumns) => {
+const onDragEnd = async (result, columns, setColumns) => {
     if (!result.destination) return
     const { source, destination } = result
     if (source.droppableId !== destination.droppableId) {
-        const sourceColumn = columns[source.droppableId]
-        const destColumn = columns[destination.droppableId]
-        const sourceTasks = [...sourceColumn.tasks]
-        const destTasks = [...destColumn.tasks]
-        const [removed] = sourceTasks.splice(source.index, 1)
-        destTasks.splice(destination.index, 0, removed)
-        setColumns({
-            ...columns,
-            [source.droppableId]: {
-                ...sourceColumn,
-                tasks: sourceTasks
-            },
-            [destination.droppableId]: {
-                ...destColumn,
-                tasks: destTasks
-            }
-        })
+        try {
+            await axios.put(process.env.REACT_APP_API_URL + '/' + result.draggableId, { column_id: result.destination.droppableId })
+            const sourceColumn = columns[source.droppableId]
+            const destColumn = columns[destination.droppableId]
+            const sourceTasks = [...sourceColumn.tasks]
+            const destTasks = [...destColumn.tasks]
+            const [removed] = sourceTasks.splice(source.index, 1)
+            destTasks.splice(destination.index, 0, removed)
+            setColumns({
+                ...columns,
+                [source.droppableId]: {
+                    ...sourceColumn,
+                    tasks: sourceTasks
+                },
+                [destination.droppableId]: {
+                    ...destColumn,
+                    tasks: destTasks
+                }
+            })
+        } catch (err) {
+            console.error(err)
+        }
     } else {
         const { source, destination } = result
         const column = columns[source.droppableId]
@@ -54,25 +59,8 @@ const DragColumns = () => {
                 setColumns(backendColumnData)
             } catch (err) {
                 console.log(err)
-                setServerErrorMessage('Error getting data from back end (SERVER ERROR)')
-                setColumns({
-                    "1": {
-                        "name": "TO DO",
-                        "tasks": []
-                    },
-                    "2": {
-                        "name": "IN PROGRESS",
-                        "tasks": []
-                    },
-                    "3": {
-                        "name": "IN REVIEW",
-                        "tasks": []
-                    },
-                    "4": {
-                        "name": "COMPLETED",
-                        "tasks": []
-                    }
-                })
+                setServerErrorMessage('Error getting task data from back end (SERVER ERROR)')
+                setColumns({ "1": { "name": "TO DO", "tasks": [] }, "2": { "name": "IN PROGRESS", "tasks": [] }, "3": { "name": "IN REVIEW", "tasks": [] }, "4": { "name": "COMPLETED", "tasks": [] } })
             }
         }
         fetchData()
