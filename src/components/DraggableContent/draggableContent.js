@@ -48,7 +48,6 @@ const DraggableContent = (props) => {
                 }}
             </Draggable>
             <ReadTaskModal isShowing={isShowing} hide={toggle} data={modalData} />
-
         </div>
     )
 }
