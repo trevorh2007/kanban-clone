@@ -1,82 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 import "./dragColumns.scss"
 import DroppableContent from "../DroppableContent/droppableContent";
-
-//how backend is sending data
-const res = {
-    "1": {
-        "name": "TO DO",
-        "tasks": [
-            {
-                "id": 1,
-                "title": "First generated task",
-                "description": "The first task created with the api",
-                "priority": "low",
-                "column_item_id": 1
-            },
-            {
-                "id": 3,
-                "title": "Second generated task",
-                "description": "The second task created with the api",
-                "priority": "medium",
-                "column_item_id": 1
-            }
-        ]
-    },
-    "2": {
-        "name": "IN PROGRESS",
-        "tasks": [
-            {
-                "id": 4,
-                "title": "Fifth Task",
-                "description": "You will need to do X on this fifth task",
-                "priority": "medium",
-                "column_item_id": 2
-            }
-        ]
-    },
-    "3": {
-        "name": "IN REVIEW",
-        "tasks": [
-            null
-        ]
-    },
-    "4": {
-        "name": "COMPLETED",
-        "tasks": [
-            null
-        ]
-    }
-}
-
-const backendItemsData = [
-    { id: uuid(), title: 'First task', description: 'Task 1 description', priority: 'high' },
-    { id: uuid(), title: 'Second task', description: 'Task 2 description', priority: 'high' },
-    { id: uuid(), title: 'Third task', description: 'Task 3 description', priority: 'low' },
-    { id: uuid(), title: 'Fourth task', description: 'Task 4 description', priority: 'medium' },
-    { id: uuid(), title: 'Fifth task', description: 'Task 5 description', priority: 'medium' }
-]
-
-const backendColumnData = {
-    [uuid()]: {
-        name: 'Backlog',
-        tasks: backendItemsData
-    },
-    [uuid()]: {
-        name: 'Todo',
-        tasks: []
-    },
-    [uuid()]: {
-        name: 'In Progress',
-        tasks: []
-    },
-    [uuid()]: {
-        name: 'Complete',
-        tasks: []
-    }
-}
+import axios from 'axios';
 
 const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return
@@ -116,7 +43,17 @@ const onDragEnd = (result, columns, setColumns) => {
 }
 
 const DragColumns = () => {
-    const [columns, setColumns] = useState(backendColumnData);
+    const [columns, setColumns] = useState({});
+
+    useEffect(async () => {
+        try {
+            const databaseData = await axios.get("http://127.0.0.1:5000/api/tasks")
+            const backendColumnData = databaseData.data[0].res
+            setColumns(backendColumnData)
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
 
     return (
         <div className="drag-column">

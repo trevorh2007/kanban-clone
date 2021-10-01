@@ -4,6 +4,7 @@ import DraggableContent from "../DraggableContent/draggableContent";
 import './droppableContent.scss';
 
 const DroppableContent = (props) => {
+    if (props.column.tasks[0] === null) props.column.tasks = []
     return (
         <div className="droppable-column">
             <h2>{props.column.name} {props.column.tasks.length > 0 ? props.column.tasks.length : ''}</h2>
