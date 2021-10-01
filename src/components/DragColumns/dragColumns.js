@@ -58,7 +58,7 @@ const DragColumns = () => {
                 const backendColumnData = databaseData.data[0].res
                 setColumns(backendColumnData)
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 setServerErrorMessage('Error getting task data from back end (SERVER ERROR)')
                 setColumns({ "1": { "name": "TO DO", "tasks": [] }, "2": { "name": "IN PROGRESS", "tasks": [] }, "3": { "name": "IN REVIEW", "tasks": [] }, "4": { "name": "COMPLETED", "tasks": [] } })
             }
