@@ -4,6 +4,53 @@ import { v4 as uuid } from 'uuid';
 import "./dragColumns.scss"
 import DroppableContent from "../DroppableContent/droppableContent";
 
+//how backend is sending data
+const res = {
+    "1": {
+        "name": "TO DO",
+        "tasks": [
+            {
+                "id": 1,
+                "title": "First generated task",
+                "description": "The first task created with the api",
+                "priority": "low",
+                "column_item_id": 1
+            },
+            {
+                "id": 3,
+                "title": "Second generated task",
+                "description": "The second task created with the api",
+                "priority": "medium",
+                "column_item_id": 1
+            }
+        ]
+    },
+    "2": {
+        "name": "IN PROGRESS",
+        "tasks": [
+            {
+                "id": 4,
+                "title": "Fifth Task",
+                "description": "You will need to do X on this fifth task",
+                "priority": "medium",
+                "column_item_id": 2
+            }
+        ]
+    },
+    "3": {
+        "name": "IN REVIEW",
+        "tasks": [
+            null
+        ]
+    },
+    "4": {
+        "name": "COMPLETED",
+        "tasks": [
+            null
+        ]
+    }
+}
+
 const backendItemsData = [
     { id: uuid(), title: 'First task', description: 'Task 1 description', priority: 'high' },
     { id: uuid(), title: 'Second task', description: 'Task 2 description', priority: 'high' },
@@ -11,22 +58,23 @@ const backendItemsData = [
     { id: uuid(), title: 'Fourth task', description: 'Task 4 description', priority: 'medium' },
     { id: uuid(), title: 'Fifth task', description: 'Task 5 description', priority: 'medium' }
 ]
+
 const backendColumnData = {
     [uuid()]: {
         name: 'Backlog',
-        items: backendItemsData
+        tasks: backendItemsData
     },
     [uuid()]: {
         name: 'Todo',
-        items: []
+        tasks: []
     },
     [uuid()]: {
         name: 'In Progress',
-        items: []
+        tasks: []
     },
     [uuid()]: {
         name: 'Complete',
-        items: []
+        tasks: []
     }
 }
 
@@ -36,32 +84,32 @@ const onDragEnd = (result, columns, setColumns) => {
     if (source.droppableId !== destination.droppableId) {
         const sourceColumn = columns[source.droppableId]
         const destColumn = columns[destination.droppableId]
-        const sourceItems = [...sourceColumn.items]
-        const destItems = [...destColumn.items]
-        const [removed] = sourceItems.splice(source.index, 1)
-        destItems.splice(destination.index, 0, removed)
+        const sourceTasks = [...sourceColumn.tasks]
+        const destTasks = [...destColumn.tasks]
+        const [removed] = sourceTasks.splice(source.index, 1)
+        destTasks.splice(destination.index, 0, removed)
         setColumns({
             ...columns,
             [source.droppableId]: {
                 ...sourceColumn,
-                items: sourceItems
+                tasks: sourceTasks
             },
             [destination.droppableId]: {
                 ...destColumn,
-                items: destItems
+                tasks: destTasks
             }
         })
     } else {
         const { source, destination } = result
         const column = columns[source.droppableId]
-        const copiedItems = [...column.items]
-        const [removed] = copiedItems.splice(source.index, 1)
-        copiedItems.splice(destination.index, 0, removed)
+        const copiedTasks = [...column.tasks]
+        const [removed] = copiedTasks.splice(source.index, 1)
+        copiedTasks.splice(destination.index, 0, removed)
         setColumns({
             ...columns,
             [source.droppableId]: {
                 ...column,
-                items: copiedItems
+                tasks: copiedTasks
             }
         })
     }

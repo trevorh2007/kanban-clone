@@ -14,11 +14,11 @@ const DraggableContent = (props) => {
     }
 
     return (
-        <Draggable key={props.item.id} draggableId={props.item.id} index={props.index}>
+        <Draggable draggableId={props.task.id} index={props.index}>
             {(provided, snapshot) => {
                 return (
                     <div
-                        className={prioritySwitch(props.item.priority)}
+                        className={prioritySwitch(props.task.priority)}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -28,10 +28,10 @@ const DraggableContent = (props) => {
                         }}
                     >
                         <div className="draggable-header">
-                            {props.item.title}
+                            {props.task.title}
                         </div>
                         <div className="draggable-desc">
-                            {props.item.description}
+                            {props.task.description}
                         </div>
                     </div>
                 )

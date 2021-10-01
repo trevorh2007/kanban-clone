@@ -6,8 +6,8 @@ import './droppableContent.scss';
 const DroppableContent = (props) => {
     return (
         <div className="droppable-column">
-            <h2>{props.column.name} {props.column.items.length > 0 ? props.column.items.length : ''}</h2>
-            <Droppable droppableId={props.id} key={props.id}>
+            <h2>{props.column.name} {props.column.tasks.length > 0 ? props.column.tasks.length : ''}</h2>
+            <Droppable droppableId={props.id}>
                 {(provided, snapshot) => {
                     return (
                         <div
@@ -16,9 +16,9 @@ const DroppableContent = (props) => {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {props.column.items.map((item, index) => {
+                            {props.column.tasks.map((task, index) => {
                                 return (
-                                    <DraggableContent item={item} index={index} key={item.id} />
+                                    <DraggableContent task={task} index={index} key={task.id} />
                                 )
                             })}
                             {provided.placeholder}
