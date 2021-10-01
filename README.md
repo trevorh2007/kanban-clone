@@ -3,11 +3,11 @@
 ### Main goals (MVP)
 
 Create a kanban board clone that will:
-- Be able to create new tasks
-- Update existing tasks name, description, priority etc.
-- Store and retrieve tasks from a database
-- Be able to drag and drop tasks from different columns and update them with a database
-- Modal view on click to see more of the tasks information
+- [x] Be able to create new tasks
+- [ ] Update existing tasks name, description, priority etc.
+- [x] Store and retrieve tasks from a database
+- [x] Be able to drag and drop tasks from different columns and update them with a database
+- [x] Modal view on click to see more of the tasks information
 
 ### Additional goals
 - User login
