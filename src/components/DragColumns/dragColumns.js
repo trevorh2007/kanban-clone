@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from 'react-beautiful-dnd';
-import { v4 as uuid } from 'uuid';
 import "./dragColumns.scss"
 import DroppableContent from "../DroppableContent/droppableContent";
 import axios from 'axios';
@@ -45,14 +44,17 @@ const onDragEnd = (result, columns, setColumns) => {
 const DragColumns = () => {
     const [columns, setColumns] = useState({});
 
-    useEffect(async () => {
-        try {
-            const databaseData = await axios.get("http://127.0.0.1:5000/api/tasks")
-            const backendColumnData = databaseData.data[0].res
-            setColumns(backendColumnData)
-        } catch (err) {
-            console.log(err)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const databaseData = await axios.get("http://127.0.0.1:5000/api/tasks")
+                const backendColumnData = databaseData.data[0].res
+                setColumns(backendColumnData)
+            } catch (err) {
+                console.log(err)
+            }
         }
+        fetchData()
     }, [])
 
     return (
