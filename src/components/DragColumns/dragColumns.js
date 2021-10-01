@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import "./dragColumns.scss"
 import DroppableContent from "../DroppableContent/droppableContent";
 import axios from 'axios';
+import CreateTask from "../Tasks/CreateTask/createTask"
 
 const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return
@@ -48,7 +49,7 @@ const DragColumns = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const databaseData = await axios.get("http://127.0.0.1:5000/api/tasks")
+                const databaseData = await axios.get(process.env.REACT_APP_API_URL)
                 const backendColumnData = databaseData.data[0].res
                 setColumns(backendColumnData)
             } catch (err) {
@@ -93,6 +94,7 @@ const DragColumns = () => {
                     })}
                 </DragDropContext>
             </div>
+            <CreateTask />
         </div>
     )
 }

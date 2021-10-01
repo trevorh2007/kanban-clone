@@ -13,6 +13,11 @@ const DraggableContent = (props) => {
         }
     }
 
+    const showTaskInfo = (task) => {
+        //add either a modal that pops up with task info, or create sliding side-bar with the info
+        console.log('testing click', task)
+    }
+
     return (
         <Draggable draggableId={props.task.id} index={props.index}>
             {(provided, snapshot) => {
@@ -26,6 +31,7 @@ const DraggableContent = (props) => {
                             backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
                             ...provided.draggableProps.style
                         }}
+                        onClick={() => showTaskInfo(props.task)}
                     >
                         <div className="draggable-header">
                             {props.task.title}
