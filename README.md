@@ -4,7 +4,7 @@
 
 Create a kanban board clone that will:
 - [x] Be able to create new tasks
-- [ ] Update existing tasks name, description, priority etc.
+- [x] Update existing tasks name, description, priority etc.
 - [x] Store and retrieve tasks from a database
 - [x] Be able to drag and drop tasks from different columns and update them with a database
 - [x] Modal view on click to see more of the tasks information
