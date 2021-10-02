@@ -19,7 +19,7 @@ const DroppableContent = (props) => {
                         >
                             {props.column.tasks.map((task, index) => {
                                 return (
-                                    <DraggableContent task={task} index={index} key={task.id} />
+                                    <DraggableContent task={task} index={index} key={task.id} triggerParentUpdate={props.triggerParentUpdate} />
                                 )
                             })}
                             {provided.placeholder}

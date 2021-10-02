@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./readTaskModal.scss";
 import axios from 'axios';
 
-const ReadTaskModal = ({ isShowing, hide, data }) => {
+const ReadTaskModal = ({ isShowing, hide, data, triggerParentUpdate }) => {
     const [deleteClicked, setDeleteClicked] = useState(false)
     const [updateClicked, setUpdateClicked] = useState(false)
 
@@ -24,6 +24,7 @@ const ReadTaskModal = ({ isShowing, hide, data }) => {
     const deleteTask = async () => {
         try {
             await axios.delete(`${process.env.REACT_APP_API_URL}/${data.id}`)
+            triggerParentUpdate()
             setDeleteClicked(false)
             hide()
         } catch (err) {

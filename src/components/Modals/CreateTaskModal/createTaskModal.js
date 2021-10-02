@@ -19,8 +19,7 @@ const CreateTaskModal = ({ isShowing, hide, triggerParentUpdate }) => {
     const [description, setDescription] = useInput('')
     const [priority, setPriority] = useInput('low')
 
-    const createTask = async (e) => {
-        e.preventDefault();
+    const createTask = async () => {
         const createTaskData = {
             title: title,
             description: description,
@@ -29,8 +28,8 @@ const CreateTaskModal = ({ isShowing, hide, triggerParentUpdate }) => {
         }
         try {
             await axios.post(process.env.REACT_APP_API_URL, createTaskData)
-            hide()
             triggerParentUpdate()
+            hide()
         } catch (err) {
             console.error(err)
         }

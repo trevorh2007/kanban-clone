@@ -80,7 +80,7 @@ const DragColumns = () => {
                 <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
                     {Object.entries(columns).map(([id, column]) => {
                         return (
-                            <DroppableContent id={id} column={column} key={id} />
+                            <DroppableContent id={id} column={column} key={id} triggerParentUpdate={fetchData} />
                         )
                     })}
                 </DragDropContext>
