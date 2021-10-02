@@ -40,6 +40,7 @@ const ReadTaskModal = ({ isShowing, hide, data, triggerParentUpdate }) => {
         }
         try {
             await axios.put(`${process.env.REACT_APP_API_URL}/${data.id}`, updateTaskData)
+            triggerParentUpdate()
             setUpdateClicked(false)
         } catch (err) {
             console.error(err)
