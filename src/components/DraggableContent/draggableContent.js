@@ -6,7 +6,7 @@ import ReadTaskModal from "../Tasks/TaskModals/ReadTaskModal/readTaskModal";
 import useModal from "../Tasks/TaskModals/utilities/useModal";
 
 const DraggableContent = (props) => {
-    const [modalData, setModalData] = useState({})
+    const [modalData] = useState(props.task)
     const { isShowing, toggle } = useModal()
 
     const prioritySwitch = priority => {
@@ -32,10 +32,7 @@ const DraggableContent = (props) => {
                                 backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
                                 ...provided.draggableProps.style
                             }}
-                            onClick={() => {
-                                setModalData(props.task);
-                                toggle();
-                            }}
+                            onClick={() => toggle()}
                         >
                             <div className="draggable-header">
                                 {props.task.title}

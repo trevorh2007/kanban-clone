@@ -4,10 +4,26 @@
   grid-template-columns: 33% 67%;
   padding: 2rem 0.5rem;
   div {
-      padding: 10px 0;
-      span {
-          font-weight: 700;
-      }
+    padding: 10px 0;
+  }
+  div, input {
+    margin-top: 20px;
+  }
+  textarea, select {
+    margin-top: 30px;
+  }
+  select {
+    height: 25px;
+    background: #fff;
+    border: 1px solid #000;
+    box-shadow: none;
+    option {
+        background: #fff;
+    }
+  }
+  input {
+   padding: 0 5px;
+   margin-top: 20px;
   }
 }
 .read-modal-btns {
@@ -31,6 +47,18 @@
     font-weight: 700;
     padding: 10px 25px;
     border-radius: 5px;
+    user-select: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .read-cancel-btn {
+    background: #888;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 5px;
+    margin-right: 10px;
     user-select: none;
     &:hover {
       cursor: pointer;
