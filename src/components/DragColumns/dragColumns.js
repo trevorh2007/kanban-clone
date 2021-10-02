@@ -3,7 +3,8 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import "./dragColumns.scss"
 import DroppableContent from "../DroppableContent/droppableContent";
 import axios from 'axios';
-import CreateTask from "../Tasks/CreateTask/createTask"
+import CreateTaskModal from "../Modals/CreateTaskModal/createTaskModal";
+import useModal from "../Modals/utilities/useModal";
 
 const onDragEnd = async (result, columns, setColumns) => {
     if (!result.destination) return
@@ -50,19 +51,21 @@ const onDragEnd = async (result, columns, setColumns) => {
 const DragColumns = () => {
     const [columns, setColumns] = useState({});
     const [serverErrorMessage, setServerErrorMessage] = useState('')
+    const { isShowing, toggle } = useModal()
+
+    const fetchData = async () => {
+        try {
+            const databaseData = await axios.get(process.env.REACT_APP_API_URL)
+            const backendColumnData = databaseData.data[0].res
+            setColumns(backendColumnData)
+        } catch (err) {
+            console.error(err)
+            setServerErrorMessage('Error getting task data from back end (SERVER ERROR)')
+            setColumns({ "1": { "name": "TO DO", "tasks": [] }, "2": { "name": "IN PROGRESS", "tasks": [] }, "3": { "name": "IN REVIEW", "tasks": [] }, "4": { "name": "COMPLETED", "tasks": [] } })
+        }
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const databaseData = await axios.get(process.env.REACT_APP_API_URL)
-                const backendColumnData = databaseData.data[0].res
-                setColumns(backendColumnData)
-            } catch (err) {
-                console.error(err)
-                setServerErrorMessage('Error getting task data from back end (SERVER ERROR)')
-                setColumns({ "1": { "name": "TO DO", "tasks": [] }, "2": { "name": "IN PROGRESS", "tasks": [] }, "3": { "name": "IN REVIEW", "tasks": [] }, "4": { "name": "COMPLETED", "tasks": [] } })
-            }
-        }
         fetchData()
     }, [])
 
@@ -82,7 +85,10 @@ const DragColumns = () => {
                     })}
                 </DragDropContext>
             </div>
-            <CreateTask />
+            <div className="create-btn" onClick={() => toggle()}>
+                Create new task
+            </div>
+            <CreateTaskModal isShowing={isShowing} hide={toggle} />
         </div>
     )
 }
