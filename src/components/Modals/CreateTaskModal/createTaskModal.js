@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./createTaskModal.scss";
 import axios from "axios";
 
-const CreateTaskModal = ({ isShowing, hide }) => {
+const CreateTaskModal = ({ isShowing, hide, triggerParentUpdate }) => {
 
     const useInput = (initialValue) => {
         const [value, setValue] = useState(initialValue);
@@ -30,6 +30,7 @@ const CreateTaskModal = ({ isShowing, hide }) => {
         try {
             await axios.post(process.env.REACT_APP_API_URL, createTaskData)
             hide()
+            triggerParentUpdate()
         } catch (err) {
             console.error(err)
         }

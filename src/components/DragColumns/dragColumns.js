@@ -88,7 +88,7 @@ const DragColumns = () => {
             <div className="create-btn" onClick={() => toggle()}>
                 Create new task
             </div>
-            <CreateTaskModal isShowing={isShowing} hide={toggle} />
+            <CreateTaskModal isShowing={isShowing} hide={toggle} triggerParentUpdate={fetchData} />
         </div>
     )
 }
