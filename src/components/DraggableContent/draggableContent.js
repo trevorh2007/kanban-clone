@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Draggable } from 'react-beautiful-dnd';
 import './draggableContent.scss'
 
-import ReadTaskModal from "../Tasks/TaskModals/ReadTaskModal/readTaskModal";
-import useModal from "../Tasks/TaskModals/utilities/useModal";
+import ReadTaskModal from "../Modals/ReadTaskModal/readTaskModal";
+import useModal from "../Modals/utilities/useModal";
 
 const DraggableContent = (props) => {
     const [modalData] = useState(props.task)
