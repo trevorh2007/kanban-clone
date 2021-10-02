@@ -38,7 +38,7 @@ const DraggableContent = (props) => {
                                 {props.task.title}
                             </div>
                             <div className="draggable-desc">
-                                {props.task.description.substring(0, 70) + '...'}
+                                {props.task.description.length >= 70 ? props.task.description.substring(0, 70) + '...' : props.task.description}
                             </div>
                         </div>
                     )
