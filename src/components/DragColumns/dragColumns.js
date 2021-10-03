@@ -76,6 +76,10 @@ const DragColumns = () => {
                     {serverErrorMessage}
                 </div>
             )}
+            <div className="create-btn" onClick={() => toggle()}>
+                Create new task
+            </div>
+            <CreateTaskModal isShowing={isShowing} hide={toggle} triggerParentUpdate={fetchData} />
             <div className="error-and-content">
                 <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
                     {Object.entries(columns).map(([id, column]) => {
@@ -85,10 +89,6 @@ const DragColumns = () => {
                     })}
                 </DragDropContext>
             </div>
-            <div className="create-btn" onClick={() => toggle()}>
-                Create new task
-            </div>
-            <CreateTaskModal isShowing={isShowing} hide={toggle} triggerParentUpdate={fetchData} />
         </div>
     )
 }
