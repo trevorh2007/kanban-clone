@@ -24,7 +24,7 @@ const ReadTaskModal = ({ isShowing, hide, data, triggerParentUpdate }) => {
     const deleteTask = async () => {
         try {
             await axios.delete(`${process.env.REACT_APP_API_URL}/${data.id}`)
-            triggerParentUpdate()
+            triggerParentUpdate('delete', title)
             setDeleteClicked(false)
             hide()
         } catch (err) {
@@ -40,8 +40,9 @@ const ReadTaskModal = ({ isShowing, hide, data, triggerParentUpdate }) => {
         }
         try {
             await axios.put(`${process.env.REACT_APP_API_URL}/${data.id}`, updateTaskData)
-            triggerParentUpdate()
+            triggerParentUpdate('update', title)
             setUpdateClicked(false)
+            hide()
         } catch (err) {
             console.error(err)
         }

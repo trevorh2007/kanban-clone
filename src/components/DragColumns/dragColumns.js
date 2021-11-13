@@ -6,6 +6,9 @@ import axios from 'axios';
 import CreateTaskModal from "../Modals/CreateTaskModal/createTaskModal";
 import useModal from "../Modals/utilities/useModal";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const onDragEnd = async (result, columns, setColumns) => {
     if (!result.destination) return
     const { source, destination } = result
@@ -53,11 +56,26 @@ const DragColumns = () => {
     const [serverErrorMessage, setServerErrorMessage] = useState('')
     const { isShowing, toggle } = useModal()
 
-    const fetchData = async () => {
+    const fetchData = async (taskStatus, taskTitle) => {
         try {
             const databaseData = await axios.get(process.env.REACT_APP_API_URL)
             const backendColumnData = databaseData.data[0].res
             setColumns(backendColumnData)
+            if (taskStatus && taskTitle) {
+                var toastTitle
+                if (taskStatus === 'create') toastTitle = `New task created: ${taskTitle}`
+                if (taskStatus === 'update') toastTitle = `Updated task: ${taskTitle}`
+                if (taskStatus === 'delete') toastTitle = `Deleted task: ${taskTitle}`
+                toast.success(toastTitle, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         } catch (err) {
             console.error(err)
             setServerErrorMessage('Error getting task data from back end (SERVER ERROR)')
@@ -76,6 +94,16 @@ const DragColumns = () => {
                     {serverErrorMessage}
                 </div>
             )}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                theme='dark'
+            />
             <div className="create-btn" onClick={() => toggle()}>
                 Create new task
             </div>

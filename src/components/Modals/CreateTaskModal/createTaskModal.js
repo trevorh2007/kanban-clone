@@ -28,7 +28,7 @@ const CreateTaskModal = ({ isShowing, hide, triggerParentUpdate }) => {
         }
         try {
             await axios.post(process.env.REACT_APP_API_URL, createTaskData)
-            triggerParentUpdate()
+            triggerParentUpdate('create', title)
             hide()
         } catch (err) {
             console.error(err)
