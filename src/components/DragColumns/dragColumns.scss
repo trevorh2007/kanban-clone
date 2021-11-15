@@ -17,6 +17,12 @@
     .error-and-content {
         display: flex;
     }
+    .create-and-dark-btns {
+        width: 80%;
+        max-width: 1080px;
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .create-btn {

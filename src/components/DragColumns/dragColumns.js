@@ -5,6 +5,7 @@ import DroppableContent from "../DroppableContent/droppableContent";
 import axios from 'axios';
 import CreateTaskModal from "../Modals/CreateTaskModal/createTaskModal";
 import useModal from "../Modals/utilities/useModal";
+import ThemeButton from "../ThemeButton/theme-button";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -104,8 +105,11 @@ const DragColumns = () => {
                 pauseOnFocusLoss
                 theme='dark'
             />
-            <div className="create-btn" onClick={() => toggle()}>
-                Create new task
+            <div className="create-and-dark-btns">
+                <div className="create-btn" onClick={() => toggle()}>
+                    Create new task
+                </div>
+                <ThemeButton />
             </div>
             <CreateTaskModal isShowing={isShowing} hide={toggle} triggerParentUpdate={fetchData} />
             <div className="error-and-content">

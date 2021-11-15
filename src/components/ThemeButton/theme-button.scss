@@ -1,0 +1,19 @@
+.btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    user-select: none;
+    margin: 30px 0 10px 0;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s all linear;
+}
+
+.btn-light {
+    background-color: #222;
+    color: #fff;
+}
+.btn-dark {
+    background-color: #fff;
+    color: #222;
+}
